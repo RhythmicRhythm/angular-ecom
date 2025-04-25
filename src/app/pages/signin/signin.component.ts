@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -18,7 +19,11 @@ export class SigninComponent {
   isSubmitting = false;
   errorMessage = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     // Initialize form with empty fields
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -39,20 +44,20 @@ export class SigninComponent {
     this.isSubmitting = true;
     this.errorMessage = '';
 
-    this.authService.login(
-      this.loginForm.value.email,
-      this.loginForm.value.password
-    ).subscribe({
-      next: (response) => {
-        console.log('Login successful! Full response:', response);
-        this.isSubmitting = false;
-        // Handle successful login (navigation will be added later)
-      },
-      error: (error) => {
-        console.error('Login error:', error);
-        this.isSubmitting = false;
-        this.errorMessage = error.error?.message || 'Login failed. Please try again.';
-      }
-    });
+    this.authService
+      .login(this.loginForm.value.email, this.loginForm.value.password)
+      .subscribe({
+        next: (response) => {
+          console.log('Login successful! Full response:', response);
+          this.isSubmitting = false;
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.error('Login error:', error);
+          this.isSubmitting = false;
+          this.errorMessage =
+            error.error?.message || 'Login failed. Please try again.';
+        },
+      });
   }
 }

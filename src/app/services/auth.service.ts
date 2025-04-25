@@ -22,7 +22,7 @@ export class AuthService {
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(
-        `${this.apiUrl}/signin`,
+        `${this.apiUrl}/sign-in`,
         { email, password },
         { withCredentials: true }
       )
@@ -42,6 +42,16 @@ export class AuthService {
       .pipe(
         tap((response) => console.log('Authentication check:', response)),
         map((response) => response.authenticated)
+      );
+  }
+  logout(): Observable<void> {
+    return this.http
+      .post<void>(`${this.apiUrl}/sign-out`, {}, { withCredentials: true })
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('auth_token');
+          // this.currentUserSubject.next(null);
+        })
       );
   }
 }
