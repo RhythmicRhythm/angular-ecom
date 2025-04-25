@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-auth-layout',
   imports: [RouterOutlet],
-  template: `<router-outlet />`,
+  template: ` <router-outlet /> `,
 })
-export class AppComponent {
-  title = 'angular-ecom';
-}
+export class AuthLayoutComponent {}
