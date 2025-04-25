@@ -38,6 +38,14 @@ export class SigninComponent {
     return this.loginForm.get('password');
   }
 
+  get submitButtonText(): string {
+    return this.isSubmitting ? 'Logging in...' : 'Sign In';
+  }
+
+  get submitButtonDisabled(): boolean {
+    return this.loginForm.invalid || this.isSubmitting;
+  }
+
   onSubmit() {
     if (this.loginForm.invalid) return;
 
