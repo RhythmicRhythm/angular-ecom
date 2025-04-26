@@ -3,11 +3,11 @@ import { PrimaryButtonComponent } from '../primary-button/primary-button.compone
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { RouterLink, Router } from '@angular/router';
-import { CommonModule, AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [PrimaryButtonComponent, RouterLink, CommonModule, AsyncPipe],
+  imports: [PrimaryButtonComponent, RouterLink, CommonModule],
   template: ` <header
     class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 shadow-lg"
   >
