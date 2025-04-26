@@ -8,6 +8,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin',
@@ -22,7 +23,8 @@ export class SigninComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     // Initialize form with empty fields
     this.loginForm = this.fb.group({
@@ -59,10 +61,12 @@ export class SigninComponent {
           console.log('Login successful! Full response:', response);
           this.isSubmitting = false;
           this.router.navigate(['/dashboard']);
+          this.toastr.success('Login successful!', 'Welcome');
         },
         error: (error) => {
           console.error('Login error:', error);
           this.isSubmitting = false;
+          this.toastr.error('Invalid credentials', 'Login failed');
           this.errorMessage =
             error.error?.message || 'Login failed. Please try again.';
         },
