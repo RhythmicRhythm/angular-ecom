@@ -15,7 +15,7 @@ import { Component, input, output } from '@angular/core';
 })
 export class PrimaryButtonComponent {
   label = input('');
-
+  disabled: boolean = false;
   btnClicked = output();
 
 }

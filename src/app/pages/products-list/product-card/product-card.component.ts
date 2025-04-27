@@ -6,29 +6,32 @@ import { CartService } from '../../../services/cart.service';
 @Component({
   selector: 'app-product-card',
   imports: [PrimaryButtonComponent],
-  template: `<div
-    class="bg-white shadow-md border rounded-xl p-6 flex flex-col gap-6 relative"
+  template: `<div class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 p-5 flex flex-col relative">
+  <div class="w-full flex justify-center mb-4">
+    <img
+      [src]="product().image"
+      alt=""
+      class="w-[180px] h-[120px] object-contain"
+    />
+  </div>
+  <div class="flex flex-col">
+    <span class="text-lg font-semibold text-gray-800 line-clamp-2 min-h-[3rem]">{{ product().title }}</span>
+    <span class="text-lg font-bold text-gray-900 mt-2">{{ product().price }}</span>
+    <app-primary-button 
+      label="Add to Cart" 
+      class="mt-4" 
+     
+      (btnClicked)="cartService.addToCart(product())" 
+    />
+  </div>
+  <span
+    class="absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-medium"
+    [class]="product().stock ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
   >
-    <div class="mx-auto">
-      <img
-        [src]="product().image"
-        alt=""
-        class="w-[200px] h-[100px] object-contain"
-      />
-      <div class="flex flex-col mt-2">
-        <span class="text-md font-bold">{{ product().title }}</span>
-        <span class="text-md font-bold">{{ '$' + product().price }}</span>
-        <app-primary-button label="Add to Cart" class="mt-3" (btnClicked)="cartService.addToCart(product())" />
-      </div>
-      <span
-        class="absolute top-2 right-3 text-sm font-bold"
-        [class]="product().stock ? 'text-green-500' : 'text-red-500'"
-      >
-        @if (product().stock) {
-        {{ product().stock }} left }@else { Out of Stock }
-      </span>
-    </div>
-  </div>`,
+    @if (product().stock) {
+    {{ product().stock }} left }@else { Out of Stock }
+  </span>
+</div>`,
   styles: ``,
 })
 export class ProductCardComponent {
