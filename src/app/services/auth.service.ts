@@ -18,6 +18,21 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {}
+  signup(fullname: string, email: string, password: string): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(
+        `${this.apiUrl}/sign-up`,
+        { fullname, email, password },
+        { withCredentials: true }
+      )
+      .pipe(
+        tap((response) => {
+          console.log('API Response:', response);
+          // this.currentUserSubject.next(response.user);
+         
+        })
+      );
+  }
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
